@@ -1,0 +1,7 @@
+function dumpNSData(dataID)
+{
+    var toAutoTrackByteDataList = ObjC.Object(dataID)
+    var buffer = toAutoTrackByteDataList.bytes()
+    var length = toAutoTrackByteDataList.length()
+    console.log(" dumpNSData ===>" + hexdump(buffer,{length:length}))
+}
