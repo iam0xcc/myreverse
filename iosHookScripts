@@ -5,3 +5,6 @@ function dumpNSData(dataID)
     var length = toAutoTrackByteDataList.length()
     console.log(" dumpNSData ===>" + hexdump(buffer,{length:length}))
 }
+
+// 堆栈回朔
+// console.log('\tACCURATE Backtrace:\n\t' + Thread.backtrace(this.context,Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join('\n\t'));
