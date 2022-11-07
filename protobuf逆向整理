@@ -1,0 +1,46 @@
+1，环境搭建
+参考内容：https://www.jianshu.com/p/b723053a86a6
+pip install protobuf    # 安装protobuf库
+
+protoc --cpp_out=. enterRomHeartBeat.proto
+
+用于protobuf执行环境的生成
+1.1定义.proto消息
+	syntax = "proto2";
+	package my;
+	message helloworld
+	{
+	    required int32 id = 1;
+	    required string str = 2;
+	    optional int32 wow = 3;
+	}
+1.2使用protoc进行编译
+	protoc -I=./ --python_out=./ ./my.helloworld.proto
+	生成相应的py文件
+1.3存储传输
+	helloworld_pb2这个就是用protoc生成的文件
+	from my.helloworld_pb2 import helloworld
+	def main():
+		    hw = helloworld()
+		    hw.id = 123
+		    hw.str = "eric"
+		    print hw
+
+		    with open("mybuffer.io", "wb") as f:
+		        f.write(hw.SerializeToString())
+
+		if __name__ == "__main__":
+		    main()
+最后存储的二进制内容为：
+0x08 0x7b 0x12 0x04 0x65 0x72 0x69 0x63
+显示的字符串为：
+{eric
+hw.str = "eric"的字符串还存在但是，其他信息已经被压缩得不见踪影了
+
+2，protobuf文件内容反解
+参考内容：https://bbs.pediy.com/thread-262207.htm
+protoc --decode_raw < xxx.bin
+	1: 123
+	2: "eric"
+这里的1，2就是我们之前定义的，也就是tag
+
